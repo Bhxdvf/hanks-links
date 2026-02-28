@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hank's Links</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        overflow-y: auto;
+        font-family: Arial, sans-serif;
+        background: #000; /* black background for Matrix */
+    }
+
+    canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: -1; /* behind content */
+        filter: blur(1px); /* slight blur */
+    }
+
+    .container {
+        position: relative;
+        z-index: 10;
+        text-align: center;
+        width: 90%;
+        max-width: 600px;
+        margin: 40px auto;
+    }
+
+    h1 {
+        color: #00ff00;
+        margin-bottom: 40px;
+        text-shadow: 0 0 10px #00ff00;
+    }
+
+    /* Fully transparent cards */
+    .link-card {
+        display: block;
+        margin: 18px 0;
+        padding: 16px;
+        background: transparent; /* removed black background */
+        color: #00ff00;
+        text-decoration: none;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        font-weight: bold;
+        box-shadow: 0 0 6px #00ff00; /* glowing outline */
+        backdrop-filter: blur(4px); /* blur code behind card slightly */
+    }
+
+    .link-card:hover {
+        box-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00;
+        transform: translateY(-3px);
+    }
+</style>
+</head>
+<body>
+
+<canvas id="matrix"></canvas>
+
+<div class="container">
+    <h1>Hank's Links</h1>
+
+    <a class="link-card" href="https://classlink.moberlyspartans.net/" target="_blank">https://classlink.moberlyspartans.net/</a>
+    <a class="link-card" href="https://awpispeak.cfd" target="_blank">https://awpispeak.cfd</a>
+    <a class="link-card" href="https://crayon.pw/" target="_blank">https://crayon.pw/</a>
+    <a class="link-card" href="https://nexora.betteruptime.com" target="_blank">https://nexora.betteruptime.com</a>
+    <a class="link-card" href="https://noterplusfire02.firebaseapp.com" target="_blank">https://noterplusfire02.firebaseapp.com</a>
+    <a class="link-card" href="https://noterplusfire06.firebaseapp.com" target="_blank">https://noterplusfire06.firebaseapp.com</a>
+    <a class="link-card" href="https://noterplusfire18.firebaseapp.com" target="_blank">https://noterplusfire18.firebaseapp.com</a>
+    <a class="link-card" href="https://noterplusfire36.firebaseapp.com" target="_blank">https://noterplusfire36.firebaseapp.com</a>
+    <a class="link-card" href="https://analytics.echofx.com" target="_blank">https://analytics.echofx.com</a>
+    <a class="link-card" href="https://band.echofx.com" target="_blank">https://band.echofx.com</a>
+</div>
+
+<script>
+const canvas = document.getElementById('matrix');
+const ctx = canvas.getContext('2d');
+
+let width = canvas.width = window.innerWidth;
+let height = canvas.height = window.innerHeight;
+
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()*&^%";
+const fontSize = 16;
+const columns = Math.floor(width / fontSize);
+
+const drops = [];
+for (let x = 0; x < columns; x++) drops[x] = Math.random() * height;
+
+function draw() {
+    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+    ctx.fillRect(0, 0, width, height);
+
+    ctx.fillStyle = "#00ff00";
+    ctx.shadowColor = "#00ff00";
+    ctx.shadowBlur = 4;
+    ctx.font = fontSize + "px monospace";
+
+    for (let i = 0; i < drops.length; i++) {
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        ctx.fillText(text, i * fontSize, drops[i]);
+        drops[i] += fontSize;
+
+        if (drops[i] > height && Math.random() > 0.975) drops[i] = 0;
+    }
+}
+
+setInterval(draw, 50);
+
+window.addEventListener('resize', () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+});
+</script>
+
+</html>
+</body>
